@@ -49205,24 +49205,58 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            leads: [],
+            load: false,
+            terms: false
+        };
+    },
     mounted: function mounted() {
         this.auth();
+        this.getData();
     },
 
     methods: {
         auth: function auth() {
-            axios.post('https://webmaster88.amocrm.ru/private/api/auth.php', {
-                USER_LOGIN: 'web.master.88@mail.ru', USER_HASH: '980a4c02110cd65468011229eaea3f94dbb0c716'
+            var _this = this;
+
+            this.load = true;
+            axios.get('/auth').then(function (response) {
+                // console.log(response)
             }).then(function (response) {
-                console.log(response.data);
+                _this.load = false;
             });
         },
         getData: function getData() {
-            axios.get('https://example.amocrm.ru/api/v2/leads?with=is_price_modified_by_robot,loss_reason_name').then(function (response) {
-                console.log(response);
+            var _this2 = this;
+
+            this.load = true;
+            axios.get('/leads').then(function (response) {
+                _this2.leads = response.data;
+                _this2.load = false;
             });
+        },
+        getParamAcaunt: function getParamAcaunt(id) {
+            if (id) {
+                return 'ДА';
+            } else {
+                return 'Нет';
+            }
+        },
+        isDisabled: function isDisabled(id) {
+            return !id ? false : true;
         }
     }
 });
@@ -49235,34 +49269,69 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c(
+          "span",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.load,
+                expression: "load"
+              }
+            ]
+          },
+          [_vm._v("Loading...")]
+        ),
+        _vm._v(" "),
+        _c("table", { staticClass: "table" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.leads, function(lead) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(lead.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(lead.name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(lead.created_at))]),
+                _vm._v(" "),
+                _c("td", [
+                  _vm._v(
+                    " " + _vm._s(_vm.getParamAcaunt(lead.main_contact["id"]))
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v("'id'])>Привязать контакт")])
+              ])
+            }),
+            0
+          )
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("table", { staticClass: "table" }, [
-            _c("thead", [
-              _c("tr", [
-                _c("td", [_vm._v("id")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("Название")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("Название")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("Дата создания")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("Есть контакт")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("Действия")])
-              ])
-            ])
-          ])
-        ])
+    return _c("thead", [
+      _c("tr", [
+        _c("td", [_vm._v("id")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Название")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Дата создания")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Есть контакт")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Действия")])
       ])
     ])
   }

@@ -2,17 +2,26 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <span v-show="load">Loading...</span>
                 <table class="table">
                     <thead>
                     <tr>
                         <td>id</td>
-                        <td>Название</td>
                         <td>Название</td>
                         <td>Дата создания</td>
                         <td>Есть контакт</td>
                         <td>Действия</td>
                     </tr>
                     </thead>
+                    <tbody>
+                    <tr v-for="lead in leads">
+                        <td>{{lead.id}}</td>
+                        <td>{{lead.name}}</td>
+                        <td>{{lead.created_at}}</td>
+                        <td> {{getParamAcaunt(lead.main_contact['id'])}}</td>
+                        <td><button class="btn btn-info"  :disabled=isDisabled(lead.main_contact['id'])>Привязать контакт</button></td>
+                    </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -21,22 +30,44 @@
 
 <script>
     export default {
+        data:function(){
+            return{
+                leads:[],
+                load:false,
+                terms:false
+            }
+        },
         mounted() {
             this.auth();
+            this.getData();
         },
-        methods:{
-            auth:function(){
-                axios.post('https://webmaster88.amocrm.ru/private/api/auth.php',{
-                    USER_LOGIN:'web.master.88@mail.ru',USER_HASH:'980a4c02110cd65468011229eaea3f94dbb0c716'
-                }).then((response)=>{
-                    console.log(response.data)
-                });
+        methods: {
+            auth: function () {
+                this.load = true;
+                axios.get('/auth').then((response) => {
+                    // console.log(response)
+                }).then((response) => {
+                        this.load = false
+                    }
+                );
             },
-            getData: function() {
-                axios.get('https://example.amocrm.ru/api/v2/leads?with=is_price_modified_by_robot,loss_reason_name')
-                    .then((response)=>{
-                       console.log(response)
+            getData: function () {
+                this.load = true;
+                axios.get('/leads')
+                    .then((response) => {
+                        this.leads = response.data;
+                        this.load = false;
                     });
+            },
+            getParamAcaunt: function (id) {
+                if (id) {
+                    return 'ДА';
+                } else {
+                    return 'Нет';
+                }
+            },
+            isDisabled: function (id) {
+                return !id ? false : true;
             }
         }
     }
