@@ -3,7 +3,7 @@
 @section('content')
     <div class="flex-center position-ref full-height">
         <div class="content">
-            <deallist-component></deallist-component>
+            <router-view></router-view>
         </div>
     </div>
     @endsection

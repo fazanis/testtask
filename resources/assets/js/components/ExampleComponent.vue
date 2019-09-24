@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card card-default">
-                    <div class="card-header">Example Component</div>
+                    <div class="card-header">{{id}}</div>
 
                     <div class="card-body">
                         I'm an example component.
@@ -16,8 +16,9 @@
 
 <script>
     export default {
+        props: ['id'],
         mounted() {
-            console.log('Component mounted.')
+            console.log(this.id)
         }
     }
 </script>

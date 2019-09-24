@@ -41,7 +41,7 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li><a href="/">Главная</a></li>
-                        <li><a href="/">Привязка контакта</a></li>
+                        <li><a href="#/contact">Привязка контакта</a></li>
                         <li><a href="/">История</a></li>
                     </ul>
                 </div>
