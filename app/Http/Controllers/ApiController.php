@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\ApiModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -146,7 +147,15 @@ class ApiController extends Controller
 
     public function addContact(Request $request)
     {
-        $contacts = ;//$request->all();
+        $contacts['add'] = array(
+            array(
+                'name' => $request->name,
+                'created_at' => Carbon::now()->timestamp,
+                'leads_id' => array(
+                    $request->leads_id,
+                ),
+            ),
+        );
         /* Теперь подготовим данные, необходимые для запроса к серверу */
         $subdomain = 'webmaster88'; #Наш аккаунт - поддомен
 #Формируем ссылку для запроса

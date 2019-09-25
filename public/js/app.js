@@ -14395,7 +14395,7 @@ window.Vue = __webpack_require__(38);
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
 
-var routes = [{ path: '/', component: __webpack_require__(11) }, { path: '/contact/:id', component: __webpack_require__(13), name: 'contact' }];
+var routes = [{ path: '/', component: __webpack_require__(11), name: 'home' }, { path: '/contact/:id', component: __webpack_require__(13), name: 'contact' }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
     routes: routes // сокращённая запись для `routes: routes`
@@ -52251,10 +52251,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.post('/addContact', {
                 name: this.name,
                 phone: this.phone,
-                comment: this.comment
+                comment: this.comment,
+                leads_id: this.id
             }).then(function (response) {
-                alert(_this.name);
-                console.log(response);
+                _this.$router.push('/');
             });
         }
     }

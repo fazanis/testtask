@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">Имя</label>
-                            <input type="text" class="form-control" id="name" v-model="name">
+                            <input type="text" class="form-control" id="name"  v-model="name">
                         </div>
                         <div class="form-group">
                             <label for="phone">Номер телефона</label>
@@ -50,10 +50,10 @@
                 axios.post('/addContact',{
                     name:this.name,
                     phone: this.phone,
-                    comment: this.comment
+                    comment: this.comment,
+                    leads_id: this.id
                 }).then((response)=>{
-                    alert(this.name);
-                    console.log(response);
+                    this.$router.push('/')
                 });
             }
         }

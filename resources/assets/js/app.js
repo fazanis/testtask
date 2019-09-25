@@ -15,7 +15,7 @@ Vue.use(VueRouter);
 
 
 let routes = [
-    { path: '/', component: require('./components/DealListComponent.vue') },
+    { path: '/', component: require('./components/DealListComponent.vue'),name:'home' },
     { path: '/contact/:id', component: require('./components/ExampleComponent.vue'), name:'contact'}
 ];
 
