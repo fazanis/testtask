@@ -20,3 +20,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/auth', 'ApiController@auth')->name('auth');
 Route::get('/leads', 'ApiController@leads')->name('leads');
+Route::post('/addContact', 'ApiController@addContact')->name('addContact');

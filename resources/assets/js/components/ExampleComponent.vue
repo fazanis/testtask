@@ -6,7 +6,22 @@
                     <div class="card-header">{{id}}</div>
 
                     <div class="card-body">
-                        I'm an example component.
+                        <div class="form-group">
+                            <label for="name">Имя</label>
+                            <input type="text" class="form-control" id="name" v-model="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Номер телефона</label>
+                            <input type="text" class="form-control" id="phone" v-model="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Коментарий</label>
+                            <input type="text" class="form-control" id="comment" v-model="comment">
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-info" @click="postContact">Привязать</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -16,9 +31,31 @@
 
 <script>
     export default {
-        props: ['id'],
+        data: function (){
+            return {
+                id: '',
+                name:'',
+                phone:'',
+                comment:''
+            }
+        },
         mounted() {
-            console.log(this.id)
+            this.getOnePosition();
+        },
+        methods:{
+            getOnePosition: function () {
+                this.id = this.$route.params.id;
+            },
+            postContact: function () {
+                axios.post('/addContact',{
+                    name:this.name,
+                    phone: this.phone,
+                    comment: this.comment
+                }).then((response)=>{
+                    alert(this.name);
+                    console.log(response);
+                });
+            }
         }
     }
 </script>

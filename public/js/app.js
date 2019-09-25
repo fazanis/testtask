@@ -52047,13 +52047,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -52137,15 +52130,25 @@ var render = function() {
                 _c(
                   "td",
                   [
-                    _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          to: { name: "contact", params: { id: lead.id } }
-                        }
-                      },
-                      [_vm._v("User")]
-                    )
+                    lead.main_contact["id"]
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info",
+                            attrs: { disabled: true }
+                          },
+                          [_vm._v("Привязать контакт")]
+                        )
+                      : _c(
+                          "router-link",
+                          {
+                            staticClass: "btn btn-info",
+                            attrs: {
+                              to: { name: "contact", params: { id: lead.id } }
+                            }
+                          },
+                          [_vm._v("Привязать контакт")]
+                        )
                   ],
                   1
                 )
@@ -52209,11 +52212,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['id'],
+    data: function data() {
+        return {
+            id: '',
+            name: '',
+            phone: '',
+            comment: ''
+        };
+    },
     mounted: function mounted() {
-        console.log(this.id);
+        this.getOnePosition();
+    },
+
+    methods: {
+        getOnePosition: function getOnePosition() {
+            this.id = this.$route.params.id;
+        },
+        postContact: function postContact() {
+            var _this = this;
+
+            axios.post('/addContact', {
+                name: this.name,
+                phone: this.phone,
+                comment: this.comment
+            }).then(function (response) {
+                alert(_this.name);
+                console.log(response);
+            });
+        }
     }
 });
 
@@ -52232,9 +52275,95 @@ var render = function() {
           _c("div", { staticClass: "card-header" }, [_vm._v(_vm._s(_vm.id))]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _vm._v(
-              "\n                    I'm an example component.\n                "
-            )
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "name" } }, [_vm._v("Имя")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.name,
+                    expression: "name"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "name" },
+                domProps: { value: _vm.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.name = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "phone" } }, [
+                _vm._v("Номер телефона")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.phone,
+                    expression: "phone"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "phone" },
+                domProps: { value: _vm.phone },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.phone = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "comment" } }, [
+                _vm._v("Коментарий")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.comment,
+                    expression: "comment"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "comment" },
+                domProps: { value: _vm.comment },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.comment = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "button",
+                { staticClass: "btn btn-info", on: { click: _vm.postContact } },
+                [_vm._v("Привязать")]
+              )
+            ])
           ])
         ])
       ])

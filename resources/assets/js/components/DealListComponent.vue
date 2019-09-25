@@ -20,15 +20,8 @@
                         <td>{{lead.created_at}}</td>
                         <td> {{lead.main_contact['id'] ? 'Да' : 'Нет' }}</td>
                         <td>
-<!--                            <button class="btn btn-info" :disabled=false v-if="lead.main_contact['id']">Привязать контакт</button>-->
-<!--                            <a href="#/contact/{{lead.id}}" class="btn btn-info" :disabled=true v-else>Привязать контакт</a>-->
-<!--                            <router-link to="/contact/2">Tablet {{lead.id}}</router-link>-->
-<!--                            <router-link-->
-<!--                                tag="a"-->
-<!--                                class="btn btn-info"-->
-<!--                                :to="{path: '#/contact', query: {id: lead.id}}"-->
-<!--                            >Привязать контакт</router-link>-->
-                            <router-link :to="{ name: 'contact', params: { id: lead.id }}">User</router-link>
+                            <button class="btn btn-info" :disabled=true v-if="lead.main_contact['id']">Привязать контакт</button>
+                            <router-link class='btn btn-info' :to="{ name: 'contact', params: { id: lead.id }}" v-else>Привязать контакт</router-link>
                         </td>
                     </tr>
                     </tbody>
